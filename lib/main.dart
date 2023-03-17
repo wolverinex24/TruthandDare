@@ -2,97 +2,79 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(RandomNameGenerator());
+  runApp(RandomTaskGenerator());
 }
 
-class RandomNameGenerator extends StatefulWidget {
+class RandomTaskGenerator extends StatefulWidget {
   @override
-  _RandomNameGeneratorState createState() => _RandomNameGeneratorState();
+  _RandomTaskGeneratorState createState() => _RandomTaskGeneratorState();
 }
 
-class _RandomNameGeneratorState extends State<RandomNameGenerator> {
+class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
   final Random _random = Random();
-  final List<String> _adjectives = [
-    'Adventurous',
-    'Brave',
-    'Clever',
-    'Energetic',
-    'Friendly',
-    'Happy',
-    'Intelligent',
-    'Joyful',
-    'Kind',
-    'Lively',
-    'Nimble',
-    'Optimistic',
-    'Pleasant',
-    'Quick',
-    'Reliable',
-    'Strong',
-    'Trustworthy',
-    'Vibrant',
-    'Witty',
-    'Zealous',
-  ];
-  final List<String> _nouns = [
-    'Alice',
-    'Bob',
-    'Charlie',
-    'David',
-    'Emily',
-    'Frank',
-    'Grace',
-    'Henry',
-    'Isabel',
-    'Jack',
-    'Katherine',
-    'Liam',
-    'Maggie',
-    'Nathan',
-    'Olivia',
-    'Peter',
-    'Quinn',
-    'Rachel',
-    'Sarah',
-    'Thomas',
-    'Uma',
-    'Victoria',
-    'William',
-    'Xander',
-    'Yasmine',
-    'Zoe',
+  final List<String> _tasks = [
+    'Do 10 jumping jacks',
+    'Sing a song in a funny voice',
+    'Text your crush and say hello',
+    'Speak with a foreign accent for the next 5 minutes',
+    'Eat a tablespoon of hot sauce',
+    'Do a silly dance',
+    'Make a prank call to a friend',
+    'Do a handstand',
+    'Wear your shirt inside out',
+    'Try to balance a spoon on your nose for 10 seconds',
+    'Go outside and shout "I love ice cream" at the top of your lungs',
+    'Do a cartwheel',
+    'Tell a joke',
+    'Take a selfie with a funny face',
+    'Do the robot dance',
+    'Put on a blindfold and draw a picture',
+    'Sing a nursery rhyme in a deep voice',
+    'Speak in slow motion for the next 5 minutes',
+    'Stand on one foot for as long as you can',
+    'Go to the nearest store and buy a candy bar using only pennies',
+    'Do 5 push-ups',
+    'Do a plank for 30 seconds',
+    'Do a roundoff',
+    'Wear your clothes backwards for the rest of the day',
+    'Tell a funny story about yourself',
   ];
   Color _generatedColor = Colors.black;
-  String _generatedName = '';
-  String _coinFlipResult = '';
+  String? _generatedTask;
+  bool _coinResult = false;
+  bool _showTask = false;
 
   @override
   void initState() {
     super.initState();
-    _generateNameAndColor();
+    _generateTaskAndColor();
   }
 
-  void _generateNameAndColor() {
-    String adjective = _adjectives[_random.nextInt(_adjectives.length)];
-    String noun = _nouns[_random.nextInt(_nouns.length)];
+  void _generateTaskAndColor() {
+    String task = _tasks[_random.nextInt(_tasks.length)];
     Color color = Color.fromRGBO(
         _random.nextInt(256), _random.nextInt(256), _random.nextInt(256), 1);
-    String coinFlipResult = _random.nextBool() ? 'Heads' : 'Tails';
     setState(() {
-      _generatedName = '$adjective $noun';
+      _generatedTask = task;
       _generatedColor = color;
-      _coinFlipResult = coinFlipResult;
+      _coinResult = _random.nextBool();
+    });
+  }
+
+  void _toggleShowTask() {
+    setState(() {
+      _showTask = !_showTask;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Random Name Generator',
+      title: 'Random Task Generator',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Random Name Generator'),
+          title: Text('Random Task Generator'),
           backgroundColor: _generatedColor,
         ),
         body: Container(
@@ -101,22 +83,39 @@ class _RandomNameGeneratorState extends State<RandomNameGenerator> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  _generatedName,
-                  style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
+                if (_showTask)
+                  Text(
+                    _generatedTask!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
                 SizedBox(height: 40),
                 ElevatedButton(
-                  onPressed: _generateNameAndColor,
+                  onPressed: () {
+                    setState(() {
+                      _generateTaskAndColor();
+                      _showTask = false;
+                    });
+                  },
                   child: Text('Generate'),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
                 Text(
-                  'Coin flip result: $_coinFlipResult',
-                  style: TextStyle(fontSize: 24, color: Colors.white),
+                  'Coin flip result: ${_coinResult ? "Heads" : "Tails"}',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _generateTaskAndColor();
+                      _showTask = true;
+                    });
+                  },
+                  child: Text('Show Task'),
                 ),
               ],
             ),
