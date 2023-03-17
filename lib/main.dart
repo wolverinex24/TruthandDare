@@ -1,8 +1,27 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 void main() {
-  runApp(RandomTaskGenerator());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Random Task Generator',
+      debugShowCheckedModeBanner: false,
+      supportedLocales: [
+        const Locale('en'),
+        const Locale('es'),
+        const Locale('fr'),
+        const Locale('zh'),
+      ],
+      home: RandomTaskGenerator(),
+    );
+  }
 }
 
 class RandomTaskGenerator extends StatefulWidget {
@@ -83,6 +102,23 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                AnimatedButton(
+                  text: 'How To Play?',
+                  pressEvent: () {
+                    AwesomeDialog(
+                      context: context,
+                      headerAnimationLoop: true,
+                      animType: AnimType.BOTTOMSLIDE,
+                      title: 'GUIDE',
+                      desc:
+                          "Toss a coin to determine if you'll receive a truth or dare task. Click 'Generate' to get a random task. If you choose truth, answer the question honestly. If you choose dare, perform the task.",
+                    ).show();
+                  },
+                ),
+                const SizedBox(
+                  width: 10,
+                  height: 16,
+                ),
                 if (_showTask)
                   Text(
                     _generatedTask!,
