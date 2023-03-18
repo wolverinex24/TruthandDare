@@ -62,6 +62,7 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
   String? _generatedTask;
   bool _coinResult = false;
   bool _showTask = false;
+  bool _displayResult = true;
 
   @override
   void initState() {
@@ -93,7 +94,7 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Random Task Generator'),
+          title: Text('Truth And Dare'),
           backgroundColor: _generatedColor,
         ),
         body: Container(
@@ -102,21 +103,7 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AnimatedButton(
-                  text: 'How To Play?',
-                  pressEvent: () {
-                    AwesomeDialog(
-                      context: context,
-                      headerAnimationLoop: true,
-                      animType: AnimType.BOTTOMSLIDE,
-                      title: 'GUIDE',
-                      desc:
-                          "Toss a coin to determine if you'll receive a truth or dare task. Click 'Generate' to get a random task. If you choose truth, answer the question honestly. If you choose dare, perform the task.",
-                    ).show();
-                  },
-                ),
                 const SizedBox(
-                  width: 10,
                   height: 16,
                 ),
                 if (_showTask)
@@ -134,13 +121,16 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                     setState(() {
                       _generateTaskAndColor();
                       _showTask = false;
+                      _displayResult = true;
                     });
                   },
-                  child: Text('Generate'),
+                  child: Text('Flip The Coin'),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Coin flip result: ${_coinResult ? "Heads" : "Tails"}',
+                  _displayResult
+                      ? 'Coin flip result: ${_coinResult ? "Heads" : "Tails"}'
+                      : "",
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 SizedBox(height: 20),
@@ -149,9 +139,27 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                     setState(() {
                       _generateTaskAndColor();
                       _showTask = true;
+                      _displayResult = false;
                     });
                   },
                   child: Text('Show Task'),
+                ),
+                SizedBox(
+                  height: 200,
+                ),
+                AnimatedButton(
+                  width: 100,
+                  text: 'How To Play?',
+                  pressEvent: () {
+                    AwesomeDialog(
+                      context: context,
+                      headerAnimationLoop: true,
+                      animType: AnimType.BOTTOMSLIDE,
+                      title: 'GUIDE',
+                      desc:
+                          "Toss a coin to determine if you'll receive a truth or dare task. Click 'Generate' to get a random task. If you choose truth, answer the question honestly. If you choose dare, perform the task.",
+                    ).show();
+                  },
                 ),
               ],
             ),
