@@ -2,69 +2,19 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:test_myapp/customUserGame/customUsergame.dart';
+import 'package:test_myapp/customUserGame/CustomListDare.dart';
 
-import 'customTruthDare/customtruthDareAdd.dart';
+import '../customTruthDare/customtruthDareAdd.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class UserRandomGame extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Random Task Generator',
-      debugShowCheckedModeBanner: false,
-      supportedLocales: [
-        const Locale('en'),
-        const Locale('es'),
-        const Locale('fr'),
-        const Locale('zh'),
-      ],
-      routes: {
-        '/': (context) => RandomTaskGenerator(),
-        '/customAddDare': (context) => userAddedtruthDare(),
-        '/Randi': (context) => UserRandomGame(),
-      },
-    );
-  }
+  _UserRandomGame createState() => _UserRandomGame();
 }
 
-class RandomTaskGenerator extends StatefulWidget {
-  @override
-  _RandomTaskGeneratorState createState() => _RandomTaskGeneratorState();
-}
-
-class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
+class _UserRandomGame extends State<UserRandomGame> {
   final Random _random = Random();
-  final List<String> _tasks = [
-    'Do 10 jumping jacks',
-    'Sing a song in a funny voice',
-    'Text your crush and say hello',
-    'Speak with a foreign accent for the next 5 minutes',
-    'Eat a tablespoon of hot sauce',
-    'Do a silly dance',
-    'Make a prank call to a friend',
-    'Do a handstand',
-    'Wear your shirt inside out',
-    'Try to balance a spoon on your nose for 10 seconds',
-    'Go outside and shout "I love ice cream" at the top of your lungs',
-    'Do a cartwheel',
-    'Tell a joke',
-    'Take a selfie with a funny face',
-    'Do the robot dance',
-    'Put on a blindfold and draw a picture',
-    'Sing a nursery rhyme in a deep voice',
-    'Speak in slow motion for the next 5 minutes',
-    'Stand on one foot for as long as you can',
-    'Go to the nearest store and buy a candy bar using only pennies',
-    'Do 5 push-ups',
-    'Do a plank for 30 seconds',
-    'Do a roundoff',
-    'Wear your clothes backwards for the rest of the day',
-    'Tell a funny story about yourself',
-  ];
+  List<String> _tasks = ["hdahdkjad"];
+
   Color _generatedColor = Colors.black;
   String? _generatedTask;
   bool _coinResult = false;
