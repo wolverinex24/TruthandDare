@@ -124,15 +124,16 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                         color: Colors.white),
                   ),
                 SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
+                AnimatedButton(
+                  width: 150,
+                  pressEvent: () {
                     setState(() {
                       _generateTaskAndColor();
                       _showTask = false;
                       _displayResult = true;
                     });
                   },
-                  child: Text('Flip The Coin'),
+                  text: 'Flip The Coin',
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -142,15 +143,16 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
+                AnimatedButton(
+                  width: 150,
+                  pressEvent: () {
                     setState(() {
                       _generateTaskAndColor();
                       _showTask = true;
                       _displayResult = false;
                     });
                   },
-                  child: Text('Show Task'),
+                  text: 'Show Task',
                 ),
                 SizedBox(
                   height: 200,
@@ -170,13 +172,14 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                   },
                 ),
                 SizedBox(height: 5),
-                ElevatedButton(
-                  onPressed: () {
+                AnimatedButton(
+                  width: 200,
+                  pressEvent: () {
                     setState(() {
                       Navigator.pushNamed(context, '/customAddDare');
                     });
                   },
-                  child: Text('Add custom Dare'),
+                  text: 'Add custom Dare',
                 ),
               ],
             ),

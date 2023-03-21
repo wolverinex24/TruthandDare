@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:test_myapp/customUserGame/CustomListDare.dart';
 
-import '../customTruthDare/customtruthDareAdd.dart';
+import 'package:test_myapp/customTruthDare/customtruthDareAdd.dart';
 
 class UserRandomGame extends StatefulWidget {
   @override
@@ -13,13 +13,13 @@ class UserRandomGame extends StatefulWidget {
 
 class _UserRandomGame extends State<UserRandomGame> {
   final Random _random = Random();
-  List<String> _tasks = ["hdahdkjad"];
-
+  final _tasks = userAddedtruthDare.textList;
   Color _generatedColor = Colors.black;
   String? _generatedTask;
   bool _coinResult = false;
   bool _showTask = false;
   bool _displayResult = true;
+  String task = "";
   TextEditingController _dareController = TextEditingController();
 
   @override
@@ -29,7 +29,11 @@ class _UserRandomGame extends State<UserRandomGame> {
   }
 
   void _generateTaskAndColor() {
-    String task = _tasks[_random.nextInt(_tasks.length)];
+    if (_tasks.isNotEmpty) {
+      task = _tasks[_random.nextInt(_tasks.length)];
+    } else {
+      print("error");
+    }
     Color color = Color.fromRGBO(
         _random.nextInt(256), _random.nextInt(256), _random.nextInt(256), 1);
     setState(() {
@@ -52,6 +56,14 @@ class _UserRandomGame extends State<UserRandomGame> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              setState(() {
+                Navigator.pushNamed(context, '/');
+              });
+            },
+          ),
           title: Text('Truth And Dare'),
           backgroundColor: _generatedColor,
         ),
@@ -74,15 +86,16 @@ class _UserRandomGame extends State<UserRandomGame> {
                         color: Colors.white),
                   ),
                 SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
+                AnimatedButton(
+                  width: 150,
+                  pressEvent: () {
                     setState(() {
                       _generateTaskAndColor();
                       _showTask = false;
                       _displayResult = true;
                     });
                   },
-                  child: Text('Flip The Coin'),
+                  text: 'Flip The Coin',
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -92,15 +105,16 @@ class _UserRandomGame extends State<UserRandomGame> {
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
+                AnimatedButton(
+                  width: 150,
+                  pressEvent: () {
                     setState(() {
                       _generateTaskAndColor();
                       _showTask = true;
                       _displayResult = false;
                     });
                   },
-                  child: Text('Show Task'),
+                  text: 'Show Task',
                 ),
                 SizedBox(
                   height: 200,
@@ -120,13 +134,14 @@ class _UserRandomGame extends State<UserRandomGame> {
                   },
                 ),
                 SizedBox(height: 5),
-                ElevatedButton(
-                  onPressed: () {
+                AnimatedButton(
+                  width: 200,
+                  pressEvent: () {
                     setState(() {
                       Navigator.pushNamed(context, '/customAddDare');
                     });
                   },
-                  child: Text('Add custom Dare'),
+                  text: 'Edit custom Dare',
                 ),
               ],
             ),
