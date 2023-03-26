@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:lottie/lottie.dart';
 import 'package:test_myapp/customUserGame/customUsergame.dart';
 
 import 'customTruthDare/customtruthDareAdd.dart';
@@ -36,7 +37,8 @@ class RandomTaskGenerator extends StatefulWidget {
   _RandomTaskGeneratorState createState() => _RandomTaskGeneratorState();
 }
 
-class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
+class _RandomTaskGeneratorState extends State<RandomTaskGenerator>
+    with TickerProviderStateMixin {
   final Random _random = Random();
   final List<String> _tasks = [
     'Do 10 jumping jacks',
@@ -70,12 +72,16 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
   bool _coinResult = false;
   bool _showTask = false;
   bool _displayResult = true;
+  bool _anim = true;
   TextEditingController _dareController = TextEditingController();
+  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _generateTaskAndColor();
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
   }
 
   void _generateTaskAndColor() {
@@ -131,6 +137,8 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                       _generateTaskAndColor();
                       _showTask = false;
                       _displayResult = true;
+                      _animationController.forward();
+                      _animationController.repeat();
                     });
                   },
                   text: 'Flip The Coin',
@@ -147,6 +155,7 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                   width: 150,
                   pressEvent: () {
                     setState(() {
+                      _animationController.stop();
                       _generateTaskAndColor();
                       _showTask = true;
                       _displayResult = false;
@@ -155,6 +164,12 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator> {
                   text: 'Show Task',
                 ),
                 SizedBox(
+                  child: Lottie.asset(
+                    'assets/23227-coin-flip-rupee.json',
+                    controller: _animationController,
+                    repeat: true,
+                    reverse: true,
+                  ),
                   height: 200,
                 ),
                 AnimatedButton(

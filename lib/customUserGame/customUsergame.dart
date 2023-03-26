@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:lottie/lottie.dart';
 import 'package:test_myapp/customUserGame/CustomListDare.dart';
 
 import 'package:test_myapp/customTruthDare/customtruthDareAdd.dart';
@@ -11,7 +12,8 @@ class UserRandomGame extends StatefulWidget {
   _UserRandomGame createState() => _UserRandomGame();
 }
 
-class _UserRandomGame extends State<UserRandomGame> {
+class _UserRandomGame extends State<UserRandomGame>
+    with TickerProviderStateMixin {
   final Random _random = Random();
   final _tasks = userAddedtruthDare.textList;
   Color _generatedColor = Colors.black;
@@ -21,11 +23,14 @@ class _UserRandomGame extends State<UserRandomGame> {
   bool _displayResult = true;
   String task = "";
   TextEditingController _dareController = TextEditingController();
+  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _generateTaskAndColor();
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1000));
   }
 
   void _generateTaskAndColor() {
@@ -93,6 +98,8 @@ class _UserRandomGame extends State<UserRandomGame> {
                       _generateTaskAndColor();
                       _showTask = false;
                       _displayResult = true;
+                      _animationController.forward();
+                      _animationController.repeat();
                     });
                   },
                   text: 'Flip The Coin',
@@ -109,6 +116,7 @@ class _UserRandomGame extends State<UserRandomGame> {
                   width: 150,
                   pressEvent: () {
                     setState(() {
+                      _animationController.stop();
                       _generateTaskAndColor();
                       _showTask = true;
                       _displayResult = false;
@@ -117,6 +125,12 @@ class _UserRandomGame extends State<UserRandomGame> {
                   text: 'Show Task',
                 ),
                 SizedBox(
+                  child: Lottie.asset(
+                    'assets/23227-coin-flip-rupee.json',
+                    controller: _animationController,
+                    repeat: true,
+                    reverse: true,
+                  ),
                   height: 200,
                 ),
                 AnimatedButton(
@@ -138,7 +152,8 @@ class _UserRandomGame extends State<UserRandomGame> {
                   width: 200,
                   pressEvent: () {
                     setState(() {
-                      Navigator.pushNamed(context, '/customAddDare');
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/customAddDare', (route) => false);
                     });
                   },
                   text: 'Edit custom Dare',
