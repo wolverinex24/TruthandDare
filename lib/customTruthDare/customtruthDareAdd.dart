@@ -83,6 +83,20 @@ class _userAddedtruthDare extends State<userAddedtruthDare> {
             },
             text: 'DELETE ALL DARES',
           ),
+          SizedBox(
+            height: 10,
+          ),
+          AnimatedButton(
+            width: 150,
+            pressEvent: () {
+              userAddedtruthDare.textList = [];
+              setState(() {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              });
+            },
+            text: 'Cancel',
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: userAddedtruthDare.textList.length,

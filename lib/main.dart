@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:lottie/lottie.dart';
 import 'package:test_myapp/customUserGame/customUsergame.dart';
-
+import 'package:flutter/services.dart';
 import 'customTruthDare/customtruthDareAdd.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) => runApp(MyApp()));
   runApp(MyApp());
 }
 
@@ -182,7 +187,7 @@ class _RandomTaskGeneratorState extends State<RandomTaskGenerator>
                       animType: AnimType.BOTTOMSLIDE,
                       title: 'GUIDE',
                       desc:
-                          "Toss a coin to determine if you'll receive a truth or dare task. Click 'Generate' to get a random task. If you choose truth, answer the question honestly. If you choose dare, perform the task.",
+                          "Toss a coin to determine if you'll receive a truth or dare task you win the toss choice is your if not your friends will decide . Click 'Show Task' to get a random task. If you choose truth, answer the question honestly. If you choose dare, perform the task.",
                     ).show();
                   },
                 ),

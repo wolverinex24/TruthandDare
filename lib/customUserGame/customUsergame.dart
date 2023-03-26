@@ -143,7 +143,7 @@ class _UserRandomGame extends State<UserRandomGame>
                       animType: AnimType.BOTTOMSLIDE,
                       title: 'GUIDE',
                       desc:
-                          "Toss a coin to determine if you'll receive a truth or dare task. Click 'Generate' to get a random task. If you choose truth, answer the question honestly. If you choose dare, perform the task.",
+                          "Toss a coin to determine if you'll receive a truth or dare task you win the toss choice is your if not your friends will decide . Click 'Show Task' to get a random task. If you choose truth, answer the question honestly. If you choose dare, perform the task.",
                     ).show();
                   },
                 ),
